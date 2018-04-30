@@ -105,7 +105,7 @@ function Set-KVStoreData {
             Invoke-RestMethod @Params
         }
         catch{
-            throw $error[0]
+            write-host $error[0]
         }
     }
     End{

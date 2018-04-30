@@ -77,7 +77,7 @@ function Get-KVStoreList {
             Invoke-RestMethod @Params
         }
         catch{
-            Throw $error[0]
+            write-host $error[0]
         }
 
     }
