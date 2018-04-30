@@ -53,29 +53,8 @@ function Get-KVStoreData {
             # Add additional required Parameters
         }
         if ($SelfSignedCert -eq $true){
-            Add-Type @"
-                using System;
-                using System.Net;
-                using System.Net.Security;
-                using System.Security.Cryptography.X509Certificates;
-                public class ServerCertificateValidationCallback
-                {
-                    public static void Ignore()
-                    {
-                        ServicePointManager.ServerCertificateValidationCallback +=
-                            delegate
-                            (
-                                Object obj,
-                                X509Certificate certificate,
-                                X509Chain chain,
-                                SslPolicyErrors errors
-                            )
-                            {
-                                return true;
-                            };
-                    }
-                }
-"@
+            # TODO
+            # http://huddledmasses.org/blog/validating-self-signed-certificates-properly-from-powershell/
         }
 
         if ($PSBoundParameters.ContainsKey('Credential')){
