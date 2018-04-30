@@ -85,7 +85,7 @@ function Get-KVStoreList {
 
         if ($PSBoundParameters.ContainsKey('SplunkApp') -And $PSBoundParameters.ContainsKey('Uri')){
             # Specified Splunk App
-            [Uri] $SplunkAppUri = $Uri + "servicesNS/" + $SplunkAppOwner + "/" + $SplunkApp + "/storage/collections/config"
+            [Uri] $SplunkAppUri = $Uri.AbsoluteUri + "servicesNS/" + $SplunkAppOwner + "/" + $SplunkApp + "/storage/collections/config"
             $params.Add('Uri',$SplunkAppUri)
         }
         else{
