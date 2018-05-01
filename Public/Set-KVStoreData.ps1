@@ -62,7 +62,7 @@ function Set-KVStoreData {
             'ContentType' = "application/json"
             # Add additional required Parameters
         }
-        
+
         #Allows for self-signed certificates
         if ($SkipCertificateCheck -eq $true){
             $params.Add('SkipCertificateCheck',$true)
@@ -73,7 +73,7 @@ function Set-KVStoreData {
         }
         else{
             # Provide Error Output
-            Throw "Credential not provided"
+            Write-Error "Credential not provided"
         }
 
         if ($PSBoundParameters.ContainsKey('SplunkApp') -And $PSBoundParameters.ContainsKey('Uri') -And $PSBoundParameters.ContainsKey('KVStoreName')){
@@ -90,7 +90,7 @@ function Set-KVStoreData {
         }
         else{
             # Provide Error Output
-            Throw "Error creating URI"
+            Write-Error "Error creating URI"
         }
 
         if ($PSBoundParameters.ContainsKey('Body')){
@@ -98,7 +98,7 @@ function Set-KVStoreData {
         }
         else{
             # Provide Error Output
-            Throw "Body not provided"
+            Write-Error "Body not provided"
         }
 
         # Invoke Rest Method
@@ -106,7 +106,7 @@ function Set-KVStoreData {
             Invoke-RestMethod @Params
         }
         catch{
-            write-host $error[0]
+            Write-Error "Failed to Invoke Restmethod"
         }
     }
     End{

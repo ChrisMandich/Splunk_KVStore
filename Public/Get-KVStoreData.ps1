@@ -63,7 +63,7 @@ function Get-KVStoreData {
         }
         else{
             # Provide Error Output
-            Throw "Credential not provided"
+            Write-Error "Credential not provided"
         }
 
         if ($PSBoundParameters.ContainsKey('SplunkApp') -And $PSBoundParameters.ContainsKey('Uri') -And $PSBoundParameters.ContainsKey('KVStoreName')){
@@ -74,7 +74,7 @@ function Get-KVStoreData {
         }
         else{
             # Provide Error Output
-            Throw "Error creating URI"
+            Write-Error "Error creating URI"
         }
 
         # Invoke Rest Method
@@ -82,7 +82,7 @@ function Get-KVStoreData {
             Invoke-RestMethod @Params
         }
         catch{
-            write-host $error[0]
+            Write-Error "Failed to Invoke Restmethod"
         }
     }
     End{

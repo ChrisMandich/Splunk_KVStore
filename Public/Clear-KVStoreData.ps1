@@ -52,7 +52,7 @@ function Clear-KVStoreData {
         }
         if ($SkipCertificateCheck -eq $true){
             # TODO
-            $params.add('SkipCertificateCheck')
+            $params.add('SkipCertificateCheck',$true)
         }
 
         if ($PSBoundParameters.ContainsKey('Credential')){
@@ -60,7 +60,7 @@ function Clear-KVStoreData {
         }
         else{
             # Provide Error Output
-            Throw "Credential not provided"
+            Write-Error "Credential not provided"
         }
 
         if ($PSBoundParameters.ContainsKey('SplunkApp') -And $PSBoundParameters.ContainsKey('Uri') -And $PSBoundParameters.ContainsKey('KVStoreName')){
@@ -71,7 +71,7 @@ function Clear-KVStoreData {
         }
         else{
             # Provide Error Output
-            Throw "Error creating URI"
+            Write-Error "Error creating URI"
         }
 
         # Invoke Rest Method
@@ -79,7 +79,7 @@ function Clear-KVStoreData {
             Invoke-RestMethod @Params
         }
         catch{
-            write-host $error[0]
+            Write-Error "Failed to Invoke Restmethod"
         }
     }
     End{
