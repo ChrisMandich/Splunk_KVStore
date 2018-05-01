@@ -18,8 +18,8 @@ function Get-KVStoreList {
     .PARAMETER SplunkAppOwner
         Splunk App Owner
 
-    .PARAMETER SelfSignedCert
-        Allows SelfSigned Certificates to be used
+    .PARAMETER SkipCertificateCheck
+        Allows SkipCertificateCheck Certificates to be used
 
     .OUTPUTS
         Output is the content returned from the request
@@ -38,7 +38,7 @@ function Get-KVStoreList {
         [Uri] $Uri = $(Throw "Please provide a URI as a parameter"),
         [String] $SplunkApp = $(Throw "Please provide a SplunkApp as a parameter"),
         [String] $SplunkAppOwner = "nobody",
-        [Switch] $SelfSignedCert = $False
+        [Switch] $SkipCertificateCheck = $False
     )
     Begin{
         # Provide Entrance Context
@@ -49,9 +49,9 @@ function Get-KVStoreList {
             # Add additional required Parameters
         }
 
-        if ($SelfSignedCert -eq $true){
-            # TODO
-            # http://huddledmasses.org/blog/validating-self-signed-certificates-properly-from-powershell/
+        #Allows for self-signed certificates
+        if ($SkipCertificateCheck -eq $true){
+            $params.Add('SkipCertificateCheck',$true)
         }
 
         if ($PSBoundParameters.ContainsKey('Credential')){

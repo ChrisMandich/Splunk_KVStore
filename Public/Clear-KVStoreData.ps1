@@ -21,8 +21,8 @@ function Clear-KVStoreData {
     .PARAMETER KVStoreName
         Splunk KVStoreName (Get-KVStoreList can be used to find KVStore Names)
 
-    .PARAMETER SelfSignedCert
-        Allows SelfSigned Certificates to be used
+    .PARAMETER SkipCertificateCheck
+        Allows SkipCertificateCheck Certificates to be used
 
     .EXAMPLE
         Clear-KVStoreData -Credential $cred -Uri $uri -SplunkApp "search" -KVStoreName "kv_Store_name"
@@ -39,7 +39,7 @@ function Clear-KVStoreData {
         [String] $SplunkApp = $(Throw "Please provide a SplunkApp as a parameter"),
         [String] $SplunkAppOwner = "nobody",
         [String] $KVStoreName = $(Throw "Please provide a KVStoreName as a parameter"),
-        [Switch] $SelfSignedCert = $False
+        [Switch] $SkipCertificateCheck = $False
     )
     Begin{
         # Provide Entrance Context
@@ -50,9 +50,9 @@ function Clear-KVStoreData {
             'Method' = "Delete"
             # Add additional required Parameters
         }
-        if ($SelfSignedCert -eq $true){
+        if ($SkipCertificateCheck -eq $true){
             # TODO
-            # http://huddledmasses.org/blog/validating-self-signed-certificates-properly-from-powershell/
+            $params.add('SkipCertificateCheck')
         }
 
         if ($PSBoundParameters.ContainsKey('Credential')){

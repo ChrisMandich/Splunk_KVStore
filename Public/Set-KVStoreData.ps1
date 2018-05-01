@@ -21,8 +21,8 @@ function Set-KVStoreData {
     .PARAMETER KVStoreName
         Splunk KVStoreName (Get-KVStoreList can be used to find KVStore Names)
 
-    .PARAMETER SelfSignedCert
-        Allows SelfSigned Certificates to be used
+    .PARAMETER SkipCertificateCheck
+        Allows SkipCertificateCheck Certificates to be used
 
     .PARAMETER BatchSave
         Allows for batch saves, in which multiple JSON elements can be saved at a time when specified in an array.
@@ -49,7 +49,7 @@ function Set-KVStoreData {
         [String] $SplunkAppOwner = "nobody",
         [String] $KVStoreName = $(Throw "Please provide a KVStoreName as a parameter"),
         [Object] $Body = $(Throw "Please provide a Body as a paremeter"),
-        [Switch] $SelfSignedCert = $False,
+        [Switch] $SkipCertificateCheck = $False,
         [Switch] $BatchSave = $False
     )
     Begin{
@@ -62,9 +62,10 @@ function Set-KVStoreData {
             'ContentType' = "application/json"
             # Add additional required Parameters
         }
-        if ($SelfSignedCert -eq $true){
-            # TODO
-            # http://huddledmasses.org/blog/validating-self-signed-certificates-properly-from-powershell/
+        
+        #Allows for self-signed certificates
+        if ($SkipCertificateCheck -eq $true){
+            $params.Add('SkipCertificateCheck',$true)
         }
 
         if ($PSBoundParameters.ContainsKey('Credential')){

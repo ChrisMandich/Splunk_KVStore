@@ -24,8 +24,8 @@ function Remove-KVStoreKey {
     .PARAMETER KVStoreKey
         Splunk KVStore _key to be affected
 
-    .PARAMETER SelfSignedCert
-        Allows SelfSigned Certificates to be used
+    .PARAMETER SkipCertificateCheck
+        Allows SkipCertificateCheck Certificates to be used
 
     .PARAMETER BatchSave
         Allows for batch saves, in which multiple JSON elements can be saved at a time when specified in an array.
@@ -52,7 +52,7 @@ function Remove-KVStoreKey {
         [String] $SplunkAppOwner = "nobody",
         [String] $KVStoreName = $(Throw "Please provide a KVStoreName as a parameter"),
         [String] $KVStoreKey = $(Throw "Please provide a KVStoreKey as a a parameter"),
-        [Switch] $SelfSignedCert = $False
+        [Switch] $SkipCertificateCheck = $False
     )
     Begin{
         # Provide Entrance Context
@@ -63,9 +63,10 @@ function Remove-KVStoreKey {
             'Method' = "Delete"
             # Add additional required Parameters
         }
-        if ($SelfSignedCert -eq $true){
-            # TODO
-            # http://huddledmasses.org/blog/validating-self-signed-certificates-properly-from-powershell/
+
+        #Allows for self-signed certificates
+        if ($SkipCertificateCheck -eq $true){
+            $params.Add('SkipCertificateCheck',$true)
         }
 
         if ($PSBoundParameters.ContainsKey('Credential')){
